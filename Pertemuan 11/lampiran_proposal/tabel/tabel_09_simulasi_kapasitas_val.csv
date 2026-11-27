@@ -1,0 +1,6 @@
+Skenario Simulasi Kapasitas,Maks Flagged (Val),t* Eksak,Biaya Eksak (1:4),Flagged Eksak,Precision (Eksak),Recall (Eksak),Specificity (Eksak),F1 (Eksak),t* Grid 0.01,Biaya Grid (1:4),Flagged Grid
+Simulasi Kapasitas 25%,221,0.5452,416,220 (24.86%),0.8545,0.662,0.9468,0.746,0.55,423,217 (24.52%)
+Simulasi Kapasitas 30%,265,0.4599,381,265 (29.94%),0.7698,0.7183,0.8985,0.7432,0.46,385,264 (29.83%)
+Simulasi Kapasitas Acuan 35%,309,0.3483,342,306 (34.58%),0.719,0.7746,0.8569,0.7458,0.34,344,308 (34.80%)
+Simulasi Kapasitas 40%,354,0.299,317,346 (39.10%),0.6734,0.8204,0.812,0.7397,0.3,319,343 (38.76%)
+Tanpa Kendala Kapasitas (100%),885,0.2682,312,371 (41.92%),0.6442,0.8415,0.7804,0.7298,0.26,313,372 (42.03%)

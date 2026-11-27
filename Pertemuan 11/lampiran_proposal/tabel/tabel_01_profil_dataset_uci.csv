@@ -1,0 +1,13 @@
+Komponen,Hasil
+Sumber dataset,Predict Students' Dropout and Academic Success — UCI #697 (DOI: 10.24432/C5MC89)
+Jumlah observasi aktual,"4,424 baris observasi"
+Jumlah fitur prediktor,36 fitur prediktor (+ 1 kolom Target = 37 kolom)
+Nama target,Target
+Jumlah kelas target asli,"3 kelas (Graduate, Dropout, Enrolled)"
+Distribusi Dropout,"1,421 mahasiswa (32.12%)"
+Distribusi Enrolled,794 mahasiswa (17.95%)
+Distribusi Graduate,"2,209 mahasiswa (49.93%)"
+Missing values,"0 sel kosong (0,00%)"
+Duplikasi,0 baris duplikat
+Tipe data CSV,"29 int64, 7 float64, 1 object"
+Unit analisis,Satu mahasiswa program sarjana per observasi

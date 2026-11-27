@@ -1,0 +1,5 @@
+Rasio Biaya (FP : FN),Ambang Teoretis Bayes,Biaya t=0.30,Biaya t=0.50,Biaya t=0.70,t* Min (Grid 0.01),Biaya Min Grid,t* Min Eksak (Unik),Biaya Min Eksak,Flagged pada t* Eksak
+1 : 1 (Setara),0.5,163,133,146,0.53,127,0.5309,127,223 (25.20%)
+1 : 2 (Asimetris Ringan),0.3333,215,220,282,0.44,215,0.3069,212,334 (37.74%)
+1 : 4 (Skenario Biaya Acuan),0.2,319,394,554,0.26,313,0.2682,312,371 (41.92%)
+1 : 8 (Proteksi Agresif),0.1111,527,742,1098,0.09,465,0.0946,453,584 (65.99%)

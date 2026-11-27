@@ -1,0 +1,4 @@
+Partisi,Jumlah Observasi,Proporsi Total,Dropout (Kelas 1),Prevalensi Positif,Graduate,Enrolled
+Training Set (60%),2654,59.99%,853,32.14%,1325,476
+Validation Set (20%),885,20.00%,284,32.09%,442,159
+Test Set (20% - Indeks Terkunci),885,20.00%,[Ditunda s.d. Evaluasi Akhir Bagian 7.2],[Ditunda s.d. Evaluasi Akhir Bagian 7.2],[Ditunda],[Ditunda]

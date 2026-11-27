@@ -1,0 +1,5 @@
+obs_id,Target,label_dropout,prob_prediksi,pred_t030,pred_t_eksak_03483,pred_t050,pred_t070,nama_prodi,Age at enrollment,Gender,Scholarship holder,Admission grade,Curricular units 1st sem (enrolled),Curricular units 1st sem (evaluations),Curricular units 1st sem (approved),Curricular units 1st sem (grade)
+OBS_4422,Dropout,1,0.0482,0,0,0,0,Nursing,30,0,1,149.5,7,8,7,14.9125
+OBS_2705,Enrolled,0,0.9867,1,1,1,1,Advertising & Marketing Mgmt,19,1,0,108.0,5,10,0,0.0
+OBS_1631,Graduate,0,0.7343,1,1,1,1,Equinculture,53,1,0,120.0,5,9,4,12.25
+OBS_4092,Dropout,1,0.4982,1,1,0,0,Management (Evening),29,0,0,135.5,5,15,2,13.25

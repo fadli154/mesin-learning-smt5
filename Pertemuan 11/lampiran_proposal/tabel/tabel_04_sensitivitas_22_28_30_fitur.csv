@@ -1,0 +1,4 @@
+Spesifikasi Fitur,Jml Fitur,Val ROC-AUC (Native),Val AP (Native),Val ROC-AUC (Isotonic CV=5),Val AP (Isotonic CV=5),Val Brier (Isotonic CV=5)
+Spesifikasi Pendaftaran Awal (22 Fitur),22,0.7517,0.6234,0.7565,0.6247,0.1763
+Spesifikasi Konservatif Akhir Sem 1 [DIPILIH] (28 Fitur),28,0.8852,0.8393,0.8868,0.8408,0.1136
+Spesifikasi Pembanding + Debtor & Tuition Fees (30 Fitur),30,0.9092,0.8701,0.9096,0.8715,0.0987

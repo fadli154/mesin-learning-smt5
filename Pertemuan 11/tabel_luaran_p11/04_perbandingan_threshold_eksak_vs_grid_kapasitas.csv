@@ -1,0 +1,5 @@
+Kandidat pada Kapasitas <=35%,Threshold,TP,FP,TN,FN,Precision,Recall,Specificity,F1,Flagged,Flagged_Pct,Cost_1_4
+Batas Bawah Eksak Memenuhi <=35% (309 mhs),0.338945,220.0,89.0,512.0,64.0,0.712,0.7746,0.8519,0.742,309.0,34.92,345.0
+Optimal Biaya Eksak pada <=35% (Titik Unik),0.348279,220.0,86.0,515.0,64.0,0.719,0.7746,0.8569,0.7458,306.0,34.58,342.0
+Optimal Biaya Pembulatan Grid 0.01 (Dikunci),0.34,220.0,88.0,513.0,64.0,0.7143,0.7746,0.8536,0.7432,308.0,34.8,344.0
+Pembulatan ke Atas 2 Desimal (Grid 0.35),0.35,219.0,86.0,515.0,65.0,0.718,0.7711,0.8569,0.7436,305.0,34.46,346.0
