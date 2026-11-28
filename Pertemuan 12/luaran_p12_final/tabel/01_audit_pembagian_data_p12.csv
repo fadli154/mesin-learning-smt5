@@ -1,0 +1,4 @@
+Partisi Data,n Observasi,Dropout (Kelas 1),Non-Dropout Endpoint (Kelas 0),Prevalensi Positif,Subkelas Graduate / Enrolled
+Training Set (60% — Digunakan untuk 5-Fold CV & Refit),2654,853,1801,32.14%,1325 / 476
+"Validation Set (20% — Kalibrasi, Threshold Biaya, & Error Analysis)",885,284,601,32.09%,442 / 159
+Test Set (20% — Indeks Terkunci; Tidak Disentuh Selama Tuning),885,[Ditunda s.d. Evaluasi Akhir Bagian G],[Ditunda s.d. Evaluasi Akhir Bagian G],[Ditunda s.d. Evaluasi Akhir Bagian G],[Ditunda]

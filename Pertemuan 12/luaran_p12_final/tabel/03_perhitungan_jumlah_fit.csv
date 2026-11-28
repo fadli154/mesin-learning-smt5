@@ -1,0 +1,8 @@
+Komponen Proses Pelatihan,Rumus Perhitungan,Jumlah
+Jumlah kandidat hyperparameter (GridSearch),6 nilai C × 2 nilai class_weight,12
+Jumlah lipatan validasi silang (StratifiedKFold),n_splits,5
+Proses fit evaluasi CV di dalam GridSearchCV,12 kandidat × 5 fold,60
+Proses refit best_estimator_ pada seluruh Training Set,refit='AP' (1 kali pada n=2.654),1
+TOTAL FIT PENCARIAN UTAMA (GridSearchCV),60 CV fit + 1 refit,61
+[Terpisah] Fit audit pra-tuning (Dummy + LogReg P11 di Bagian D),2 model × (5 CV + 1 fit penuh),12
+[Terpisah] Fit evaluasi kalibrasi Isotonic CV=5 (Bagian F: P11 & Best),2 model × 5 fold internal kalibrasi,10
