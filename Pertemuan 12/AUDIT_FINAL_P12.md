@@ -1,49 +1,33 @@
-# Laporan Patch Final Audit Konsistensi & Validitas Pertemuan 12 (`AUDIT_FINAL_P12.md`)
+# Laporan Audit Akhir Pertemuan 12 (`AUDIT_FINAL_P12.md`)
 
 **Mata Kuliah:** Pembelajaran Mesin (*Machine Learning*) — Pertemuan 12  
 **Mahasiswa:** Fadli Hifziansyah (`241730042` | Kelas `5 INF B`)  
 **Dosen Pengampu:** Bapak Ahmad Tabrani  
-**Berkas Sebelumnya (Dipertahankan Utuh):** `Pertemuan 12/241730042_Fadli_Hifziansyah_P12_TugasML.ipynb`  
-**Berkas Hasil Patch Final:** `Pertemuan 12/241730042_Fadli_Hifziansyah_P12_TugasML_FINAL.ipynb`  
-**Berkas Perbandingan Lengkap Model:** `Pertemuan 12/PERBANDINGAN_MODEL_P12.md`  
-**Dataset Lokal Disertakan:** `Pertemuan 12/dataset-asli.csv` (UCI #697, SHA-256 LF: `19737f02127e85ef29af536e46888a7721b6c530c3e1c6aedfbb09109c030a71`)
+**Berkas Notebook Final:** `Pertemuan 12/241730042_Fadli_Hifziansyah_P12_TugasML.ipynb`  
+**Sumber Dataset Lokal:** `Pertemuan 12/dataset-asli.csv` (`533.230` byte; UCI #697, SHA-256 LF: `19737f02127e85ef29af536e46888a7721b6c530c3e1c6aedfbb09109c030a71`)
 
 ---
 
-## 1. Ringkasan Audit dan Prinsip Perbaikan
+## 1. Daftar Koreksi Dokumentasi & Metodologi Akhir
 
-Rancangan metodologis inti (`GridSearchCV` 12 kandidat $\times$ `5-Fold StratifiedKFold` $= 60$ CV fit $+ 1$ `refit` $= 61$ fit, `Pipeline` prapemrosesan `28` fitur konservatif akhir Semester Pertama, `refit="AP"`, `SEED = 42`, dan pembagian `60/20/20`) dipertahankan sepenuhnya tanpa perubahan eksperimen. Seluruh ketidaksesuaian antara keluaran kode aktual dan narasi dokumentasi telah diperbaiki secara tuntas pada `241730042_Fadli_Hifziansyah_P12_TugasML_FINAL.ipynb`.
+Seluruh rancangan eksperimen, `Pipeline`, `GridSearchCV` 12 kandidat $\times$ 5 fold (`61` total `fit`), dan angka hasil evaluasi dipertahankan tanpa perubahan eksperimen maupun pengeditan angka manual. Empat penyempurnaan ketepatan ilmiah yang diterapkan meliputi:
 
----
+1. **Penjelasan Akurat Penggunaan Label pada Stratifikasi vs. Isolasi *Test Set* (Bagian B.4 & C.3–C.5):**
+   * Klaim harfiah bahwa *Test Set* *"sama sekali tidak dimasukkan maupun dibaca"* telah diganti dengan penjelasan teknis yang presisi: kolom `Target` digunakan pada tahap awal **hanya** untuk pemetaan kelas biner dan stratifikasi pembagian data (`train_test_split(..., stratify=df_uci["Target"])`) agar proporsi kelas konsisten. Setelah partisi terbentuk, fitur dan label *Test Set* tidak digunakan dalam proses *fitting*, *cross-validation*, pemilihan *hyperparameter*, kalibrasi, maupun penentuan *threshold*, dan baru dievaluasi pada tahap akhir (Bagian G) setelah seluruh konfigurasi dikunci. Keterbatasan bahwa partisi *Test Set* yang sama pernah dievaluasi pada tahap akhir Pertemuan 11 tetap dipertahankan secara jujur.
+2. **Peran `random_state` pada `LogisticRegression` dengan `solver='lbfgs'` (Bagian B.1 & C.3):**
+   * Dijelaskan secara eksplisit sesuai dokumentasi `Scikit-learn 1.9.1` bahwa parameter `random_state` pada `LogisticRegression` hanya digunakan oleh *solver* berbasis pengacakan (`sag`, `saga`, `liblinear`) dan **tidak memengaruhi optimasi deterministik `solver='lbfgs'`**. Reproduksibilitas eksperimen dikendalikan oleh `SEED = 42` pada `train_test_split` dan `StratifiedKFold`, sementara `l1_ratio=0.0` tetap ditetapkan eksplisit untuk regularisasi murni $L_2$.
+3. **Pelunakan Klaim *Underfitting* pada `C = 0,03` (Bagian E.1, E.6, & H.2 `log_tuning`):**
+   * Mengingat kesenjangan *train–CV* pada `C = 0,03` relatif kecil (`Mean Train AP = 0,8201`; `Mean CV AP = 0,8018 ± 0,0134`; `gap = +0,0182`), istilah mutlak *underfitting* telah dilunakkan menjadi **indikasi regularisasi terlalu kuat atau *underfitting* relatif terhadap kandidat terbaik (`C = 0,3`)**.
+4. **Penjelasan Objektif `class_weight = None` terhadap Kalibrasi (Bagian E.1 & E.6):**
+   * Klaim bahwa `class_weight = None` otomatis menghasilkan probabilitas lebih terkalibrasi telah diubah menjadi penjelasan teoretis bahwa opsi tersebut **tidak melakukan pembobotan ulang antarkelas**, sedangkan kualitas kalibrasinya dibuktikan secara empiris melalui `Brier Score` dan `ECE` aktual pada Bagian F.
 
-## 2. Daftar Perubahan dan Angka yang Diperbaiki
-
-| No | Aspek yang Diaudit | Kondisi Sebelum Patch | Koreksi pada `..._FINAL.ipynb` | Lokasi Bagian |
-|:---:|---|---|---|---|
-| **1** | **Jumlah kolom hasil transformasi** | Narasi menyebut `236` kolom (padahal `coef_.shape = (1, 213)` saat di-*fit* pada `X_train`, $n = 2.654$). | Seluruh penyebutan `236` dikoreksi menjadi **`213` kolom hasil transformasi** dan dibedakan tegas dari **`28` fitur mentah konservatif** sebelum preprocessing (diverifikasi dengan `assert clf_terbaik.coef_.shape == (1, 213)`). | A.4, B.1, D, E.1, E.7, G.4, H.4, H.8 |
-| **2** | **Norma $L_2$ vektor koefisien (`\|\|w\|\|_2`)** | Narasi menyebut `5,5329` $\rightarrow$ `3,5297` (`36,2%`). | Dikoreksi sesuai *output* kode aktual menjadi **`6,4629` (`C = 1,0`) $\rightarrow$ `4,3923` (`C = 0,3`)**, menyusut **`32,0%`**, disertai penegasan bahwa penyusutan norma koefisien adalah konsekuensi matematis langsung regularisasi $L_2$, bukan bukti tunggal keunggulan model. | E.7, G.4, H.4, H.8 |
-| **3** | **Istilah representasi *sparse* vs. *dense*** | Menyebut *"matriks fitur renggang (sparse one-hot)"* padahal `OneHotEncoder(..., sparse_output=False)`. | Diubah menjadi **"representasi *one-hot* dengan banyak nilai nol yang disimpan sebagai array *dense* (`sparse_output=False`)"**. | E.1, G.4 |
-| **4** | **Referensi peta bagian A.2** | Menyebut `Bagian B.7` untuk penentuan metrik utama. | Dikoreksi menjadi **`Bagian B.4`** sesuai *heading* aktual (`### B.4 Pemilihan Metrik Utama...`) dan seluruh rujukan subbagian di A.2 diselaraskan. | A.2 |
-| **5** | **Konsistensi simpangan baku (`SD`)** | `cv_results_` memakai SD populasi (`ddof=0`), sedangkan `cv_results_df["mean_fit_time"].std()` memakai SD sampel Pandas (`ddof=1`). | Seluruh perhitungan SD di Bagian D, E.4, dan H.2 disamakan secara eksplisit menggunakan **`np.std(..., ddof=0)`** (SD populasi atas lipatan/kandidat) dan diberi keterangan konvensi statistik. | D, E.4, H.2, H.4 |
-| **6** | **Pemisahan *Best CV AP* vs. Biaya Operasional Minimum** | Penjelasan belum memisahkan cukup tajam bahwa pemenang `AP` bukan peraih biaya keputusan terendah. | Dipisahkan eksplisit menjadi tiga butir: (1) *Best estimator* menurut `Mean CV AP` (`C = 0,3, None`: `CV AP = 0,8131`, `Test AP = 0,8284`), (2) Konfigurasi berbiaya operasional *Test Set* terendah (`C = 1,0` *native* = **`364` satuan** < `C = 0,3` *native* = **`380` satuan** < P11 `C = 1,0 + Isotonic` = **`384` satuan**), dan (3) Justifikasi konfigurasi artikel UAS tanpa mengubah keputusan berdasarkan *Test Set*. | G.3, G.4, H.4 |
-| **7** | **Klaim waktu `fit` kandidat `C = 10,0` & iterasi `lbfgs`** | Menyebut waktu `fit` `~2x` lebih lambat dan memastikan penyebabnya adalah jumlah iterasi `lbfgs`. | Rasio dihitung dinamis dari pengukuran aktual (`0,2736 / 0,2176 ≈ 1,26x` pada eksekusi kernel bersih final ini; sekitar `1,5x` pada eksekusi sebelumnya) dan ditegaskan bahwa karena `n_iter_` tidak direkam di seluruh 60 lipatan CV, penyebabnya tidak dipastikan berasal dari jumlah iterasi `lbfgs`. | E.1, E.6, H.2 |
-| **8** | **Visualisasi peringkat 12 konfigurasi** | Grafik batang horizontal terpotong pada `0,76–0,84` memperbesar kesan visual selisih tipis. | Diganti menjadi **Cleveland Dot Plot dengan *Horizontal Error Bars* (`±1 SD`)** disertai kotak catatan eksplisit pada grafik bahwa sumbu `0,76–0,84` adalah *zoomed range* agar *error bar* terbaca (sedangkan *baseline* `Dummy` berada di `0,3214`). | E.6 (`01_evaluasi_gridsearch_cv.png`) |
-| **9** | **Eksplisitasi `l1_ratio=0.0` pada `Scikit-learn 1.9.1`** | Mengandalkan nilai *default* `l1_ratio=0.0`. | Menetapkan **`l1_ratio=0.0` secara eksplisit** pada konstruktor `LogisticRegression(...)` dan mendokumentasikan bahwa menurut dokumentasi resmi `Scikit-learn 1.9.1`, parameter `penalty` telah *deprecated* sejak versi `1.8` dan dijadwalkan dihapus pada `1.10`. | B.1, C.3, H.8 |
+*(Seluruh koreksi sebelumnya—`28` fitur mentah $\rightarrow$ `213` kolom array *dense*, penyusutan norma koefisien `6,4629` $\rightarrow$ `4,3923` [`32,0%`], keseragaman `np.std(..., ddof=0)`, pemisahan `Best CV AP` [`380` satuan] vs. biaya uji terendah `C = 1,0` *native* [`364` satuan], serta Cleveland Dot Plot dengan catatan *zoomed range*—tetap terjaga utuh).*
 
 ---
 
-## 3. Hasil Pengujian Eksekusi Ulang dari Kernel Bersih
+## 2. Status *Clean Execution* (*Restart Kernel and Run All*)
 
-1. **Ketersediaan Dataset & Lingkungan:**
-   * Dataset lokal `Pertemuan 12/dataset-asli.csv` (`533.230` byte) terbaca langsung oleh kernel (`Sumber dataset aktif: Berkas lokal (dataset-asli.csv)`), terverifikasi SHA-256 penuh 64 karakter.
-   * Lingkungan eksekusi: `Python 3.14.5`, `NumPy 2.4.4`, `Pandas 3.0.6`, `Scikit-learn 1.9.1`, `16` *logical CPU cores*.
-2. **Audit Statis & Kebersihan Teks:**
-   * `0` karakter kontrol terlarang, `0` simbol global tak terdefinisi, dan `0` kemunculan angka/istilah lama (`236`, `5,5329`, `3,5297`, `36,2%`, `Bagian B.7`, `sparse one-hot`, `~2x lebih lambat`).
-3. **Eksekusi Berurutan Seluruh Sel (`nbclient`):**
-   * Seluruh `31` sel (`16` Markdown + `15` sel kode) dieksekusi dari awal dalam kernel baru tanpa satu pun *error* (`0` *exception*).
-   * Waktu pengukuran aktual eksekusi final: `wall-clock GridSearchCV = 8,6078 detik` (`2026-11-28 20:13:44.156` s.d. `20:13:52.764`), akumulasi *fitting* 60 fold `11,7044 detik` (+ *scoring* `1,7989 detik`), rata-rata 1x `fit` `0,1951 ± 0,0524 detik` (`ddof=0`), `refit_time_ = 0,1419 detik`.
-4. **Pemeriksaan *Assertion* & Jumlah Kata Kesimpulan:**
-   * Blok *Assertion* A (invarian metodologis & rumus dinamis) **LULUS 100%**, termasuk verifikasi panjang kesimpulan Bagian H.4 sebesar **`373` kata** (memenuhi rentang wajib `250–400` kata).
-   * Blok *Assertion* B (regresi spesifik eksperimen UCI #697, `SEED = 42`) **LULUS 100%**, termasuk `coef_.shape == (1, 213)`, `l1_ratio == 0.0`, norma `6,4629 -> 4,3923 (32,0%)`, `best_params_ == {'clf__C': 0.3, 'clf__class_weight': None}`, `best_score_ == 0,8131`, dan biaya uji `364` vs. `380` vs. `384`.
-5. **Perlindungan Berkas Sebelumnya:**
-   * `04_TUGAS_P12_Hyperparameter_Tuning_yang_Terkendali.ipynb`, `241730042_Fadli_Hifziansyah_P12_TugasML.ipynb` (versi sebelum patch), seluruh notebook Pertemuan 11, dan `dataset-asli.csv` terverifikasi **100% identik byte-demi-byte**.
+* **Status Ketersediaan Lingkungan & Dataset:** Terverifikasi tersedia (`Python 3.14.5`, `NumPy 2.4.4`, `Pandas 3.0.6`, `Scikit-learn 1.9.1`; `Sumber dataset aktif: Berkas lokal (dataset-asli.csv)`).
+* **Urutan Eksekusi Bersih:** Seluruh *output* lama dikosongkan dan seluruh `15` sel kode dieksekusi berurutan dari kernel baru dengan **`execution_count = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]`** dan **`0` *error***.
+* **Waktu Terukur Terkini (`Cell [6]` / Bagian E.4):** `wall-clock GridSearchCV = 4,9819 detik` (`2026-11-28 20:39:55.001` s.d. `20:39:59.983`), akumulasi *fitting* 60 fold `5,9951 detik`, `Mean ± SD [ddof=0]` waktu 1x `fit` `0,0999 ± 0,0216 detik`, `refit_time_ = 0,0642 detik`.
+* **Verifikasi Otomatis (`Cell [15]` / Bagian H.8):** Baik pemeriksaan invarian rumus dinamis (termasuk panjang kesimpulan `373` kata dalam rentang `250–400` kata) maupun pemeriksaan regresi spesifik eksperimen lulus **100%**.

@@ -1,11 +1,11 @@
 Metrik Biaya Komputasi,Nilai Pengukuran Aktual
-Waktu mulai eksekusi (jam lokal),2026-11-28 20:17:10.639
-Waktu selesai eksekusi (jam lokal),2026-11-28 20:17:13.299
-Wall-clock elapsed time keseluruhan GridSearchCV,2.6596 detik
-Akumulasi waktu fitting 60 fold CV (serial ekuivalen),7.3553 detik
-Akumulasi waktu scoring 60 fold CV (serial ekuivalen),1.0965 detik
-Rata-rata waktu 1x fit lintas 12 kandidat (Mean ± SD [ddof=0]),0.1226 ± 0.0301 detik
-Waktu refitting best_estimator_ (refit_time_),0.0655 detik
+Waktu mulai eksekusi (jam lokal),2026-11-28 20:43:54.464
+Waktu selesai eksekusi (jam lokal),2026-11-28 20:44:01.567
+Wall-clock elapsed time keseluruhan GridSearchCV,7.1034 detik
+Akumulasi waktu fitting 60 fold CV (serial ekuivalen),9.9898 detik
+Akumulasi waktu scoring 60 fold CV (serial ekuivalen),1.2970 detik
+Rata-rata waktu 1x fit lintas 12 kandidat (Mean ± SD [ddof=0]),0.1665 ± 0.0698 detik
+Waktu refitting best_estimator_ (refit_time_),0.1311 detik
 Jumlah kandidat × fold (+ refit) = Total fit,12 × 5 (+ 1) = 61 fit
 Konfigurasi paralelisme (CPU tersedia / n_jobs / pre_dispatch),16 logical cores / n_jobs=4 / pre_dispatch='2*n_jobs'
 Versi Python & Scikit-learn,Python 3.14.4 | Scikit-learn 1.9.1
